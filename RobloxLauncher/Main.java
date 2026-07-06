@@ -1,9 +1,13 @@
 import javax.swing.*;
+import javax.sound.sampled.*;
+
+import java.io.File;
+import java.io.File.*;
 import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame window = new JFrame("ROADBLOCKS LAUNCHER");
+        JFrame window = new JFrame("ROADBLOCKS LAUNCHER (SAFE)");
         window.setSize(500, 400);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(null); // manual positioning, like before
@@ -11,19 +15,29 @@ public class Main {
         ImageIcon icon = new ImageIcon("RobloxLauncher/images/icon.png");
         window.setIconImage(icon.getImage());
 
-        System.out.println("Looking in: " + new java.io.File("RobloxLauncher/images/background.png").getAbsolutePath()); //debug line to check the path
-
         // Load the image and put it in a label
         ImageIcon backgroundImage = new ImageIcon("RobloxLauncher/images/background.png");
-        System.out.println("Image width: " + backgroundImage.getIconWidth());
         JLabel background = new JLabel(backgroundImage);
         background.setBounds(0, 0, 500, 400); // covers the entire window
-        window.add(background);
-
-        JButton launchButton = new JButton("LAUNCH ROADBLOCKS!!!");
-        launchButton.setBounds(130, 130, 140, 35);
-        window.add(launchButton);
         
+        
+        JButton launchButton = new JButton("LAUNCH ROADBLOCKS!!!");
+        launchButton.setBounds(150, 275, 200, 35);
+
+        window.add(launchButton);
+        window.add(background);
         window.setVisible(true);
+
+        // Add this after window.setVisible(true), or wherever you want playback to start
+try {
+    File musicFile = new File("RobloxLauncher/audio/music.wav");
+    AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+    Clip clip = AudioSystem.getClip();
+    clip.open(audioStream);
+    clip.start();
+} catch (Exception e) {
+    e.printStackTrace();
+}
+
     }
 }
